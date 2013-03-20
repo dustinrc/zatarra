@@ -62,3 +62,9 @@ class Queue(object):
         entry = self.entries.pop(key)
         entry[-2] = REMOVED
 
+    def clean(self):
+        """
+        """
+
+        self.heap = [entry for entry in self.heap if entry[-2] != REMOVED]
+

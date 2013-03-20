@@ -103,3 +103,38 @@ class QueueGetTest(BaseTestCase):
         self.assertEqual([], q.heap)
         self.assertEqual({}, q.entries)
 
+
+class QueueHousekeepingTest(BaseTestCase):
+
+    def test_clean(self):
+        """Queue.clean method"""
+
+        q = Queue()
+        key1 = q.put(1)
+        q.put(2)
+        key3 = q.put(3)
+        q.remove(key1)
+        q.remove(key3)
+        q.clean()
+
+        expected_heap = [
+            [0, 0.00025, 2, '00000000-0000-0000-0000-000000000002']
+        ]
+
+        self.assertEqual(expected_heap, q.heap)
+
+    def test_remove(self):
+        """Queue.remove method"""
+
+        q = Queue()
+        key = q.put(1)
+        q.remove(key)
+
+        expected_heap = [
+            [0, 0.000125, REMOVED, '00000000-0000-0000-0000-000000000001']
+        ]
+        expected_entries = {}
+
+        self.assertEqual(expected_heap, q.heap)
+        self.assertEqual(expected_entries, q.entries)
+

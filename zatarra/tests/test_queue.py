@@ -103,6 +103,21 @@ class QueueGetTest(BaseTestCase):
         self.assertEqual([], q.heap)
         self.assertEqual({}, q.entries)
 
+    def test_get_removed(self):
+        """Queue.get method w/ items already marked remove"""
+
+        q = Queue()
+        key1 = q.put('Moe')
+        key2 = q.put('Larry')
+        q.put('Curly')
+        q.remove(key1)
+        q.remove(key2)
+
+        expected_get = ('Curly', '00000000-0000-0000-0000-000000000003')
+        actual_get = q.get()
+
+        self.assertEqual(expected_get, actual_get)
+
 
 class QueueHousekeepingTest(BaseTestCase):
 

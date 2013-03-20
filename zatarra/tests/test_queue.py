@@ -18,13 +18,13 @@ from zatarra.queue import Queue, PRIORITY, REMOVED
 class QueueDefaultsTest(BaseTestCase):
 
     def test_constants(self):
-        """Constant defaults"""
+        """Queue constant defaults"""
 
         self.assertEqual(0, PRIORITY)
         self.assertEqual('<REMOVED>', REMOVED)
 
     def test_initialization(self):
-        """Initialization defaults"""
+        """Queue initialization defaults"""
 
         q = Queue()
 

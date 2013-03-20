@@ -33,9 +33,19 @@ class Queue(object):
         if key is None:
             key = str(uuid.uuid4())
 
-        entry = (priority, time.time(), item, key)
+        if key in self.entries:
+            self.remove(key)
+
+        entry = [priority, time.time(), item, key]
         self.entries[key] = entry
         heapq.heappush(self.heap, entry)
 
         return key
+
+    def remove(self, key):
+        """
+        """
+
+        entry = self.entries.pop(key)
+        entry[-2] = REMOVED
 

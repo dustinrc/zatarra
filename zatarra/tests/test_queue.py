@@ -41,11 +41,11 @@ class QueuePutTest(BaseTestCase):
         key = q.put(1)
 
         expected_heap = [
-            (0, 0.000125, 1, '00000000-0000-0000-0000-000000000001')
+            [0, 0.000125, 1, '00000000-0000-0000-0000-000000000001']
         ]
         expected_entries = {
             '00000000-0000-0000-0000-000000000001':
-                (0, 0.000125, 1, '00000000-0000-0000-0000-000000000001')
+                [0, 0.000125, 1, '00000000-0000-0000-0000-000000000001']
         }
         self.assertEqual(expected_heap, q.heap)
         self.assertEqual(expected_entries, q.entries)
@@ -60,11 +60,30 @@ class QueuePutTest(BaseTestCase):
         q.put(3, priority=-1)
 
         expected_smallest = [
-            (-1, 0.00025, 2, '00000000-0000-0000-0000-000000000002'),
-            (-1, 0.000375, 3, '00000000-0000-0000-0000-000000000003'),
-            (0, 0.000125, 1, '00000000-0000-0000-0000-000000000001')
+            [-1, 0.00025, 2, '00000000-0000-0000-0000-000000000002'],
+            [-1, 0.000375, 3, '00000000-0000-0000-0000-000000000003'],
+            [0, 0.000125, 1, '00000000-0000-0000-0000-000000000001']
         ]
         actual_smallest = heapq.nsmallest(3, q.heap)
 
         self.assertEqual(expected_smallest, actual_smallest)
+
+    def test_put_overwrite(self):
+        """Queue.put method overwriting existing item"""
+
+        q = Queue()
+        key1 = q.put(1)
+        key2 = q.put(2, priority=2, key=key1)
+
+        expected_heap = [
+            [0, 0.000125, REMOVED, '00000000-0000-0000-0000-000000000001'],
+            [2, 0.00025, 2, '00000000-0000-0000-0000-000000000001']
+        ]
+        expected_entries = {
+            '00000000-0000-0000-0000-000000000001':
+                [2, 0.00025, 2, '00000000-0000-0000-0000-000000000001']
+        }
+        self.assertEqual(expected_heap, q.heap)
+        self.assertEqual(expected_entries, q.entries)
+        self.assertEqual(key1, key2)
 

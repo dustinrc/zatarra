@@ -52,7 +52,7 @@ class QueuePutTest(BaseTestCase):
         self.assertEqual('00000000-0000-0000-0000-000000000001', key)
 
     def test_put_prioritory(self):
-        """Queue.put method w/ different priority"""
+        """Queue.put method ordering w/ different priorities"""
 
         q = Queue()
         q.put(1)

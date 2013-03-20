@@ -153,3 +153,27 @@ class QueueHousekeepingTest(BaseTestCase):
         self.assertEqual(expected_heap, q.heap)
         self.assertEqual(expected_entries, q.entries)
 
+
+class QueueDunderTests(BaseTestCase):
+
+    def test_contains(self):
+        """Queue as a container"""
+
+        q = Queue()
+        key = q.put(1)
+        self.assertTrue(key in q)
+
+        q.remove(key)
+        self.assertFalse(key in q)
+
+    def test_length(self):
+        """Queue length"""
+
+        q = Queue()
+        for i in range(100):
+            q.put(i)
+        for x in range(50):
+            q.get()
+
+        self.assertEqual(50, len(q))
+

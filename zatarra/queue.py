@@ -26,6 +26,12 @@ class Queue(object):
         self.heap = []
         self.entries = {}
 
+    def __contains__(self, key):
+        return key in self.entries
+
+    def __len__(self):
+        return len(self.entries)
+
     def put(self, item, priority=PRIORITY, key=None):
         """
         """

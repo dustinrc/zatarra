@@ -11,7 +11,7 @@
 
 import heapq
 import time
-
+import uuid
 
 
 PRIORITY = 0
@@ -30,7 +30,12 @@ class Queue(object):
         """
         """
 
-        entry = (priority, time.time(), item)
-        self.entries[item] = entry
+        if key is None:
+            key = str(uuid.uuid4())
+
+        entry = (priority, time.time(), item, key)
+        self.entries[key] = entry
         heapq.heappush(self.heap, entry)
+
+        return key
 

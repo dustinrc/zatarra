@@ -42,6 +42,19 @@ class Queue(object):
 
         return key
 
+    def get(self):
+        """
+        """
+
+        priority, epoch_time, item, key = heapq.heappop(self.heap)
+
+        while key == REMOVED:
+            priority, epoch_time, item, key = heapq.heappop(self.heap)
+
+        del self.entries[key]
+
+        return (item, key)
+
     def remove(self, key):
         """
         """

@@ -87,3 +87,19 @@ class QueuePutTest(BaseTestCase):
         self.assertEqual(expected_entries, q.entries)
         self.assertEqual(key1, key2)
 
+
+class QueueGetTest(BaseTestCase):
+
+    def test_get(self):
+        """Queue.get method"""
+
+        q = Queue()
+        q.put('Moe')
+
+        expected_get = ('Moe', '00000000-0000-0000-0000-000000000001')
+        actual_get = q.get()
+
+        self.assertEqual(expected_get, actual_get)
+        self.assertEqual([], q.heap)
+        self.assertEqual({}, q.entries)
+

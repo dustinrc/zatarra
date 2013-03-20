@@ -38,10 +38,18 @@ class QueuePutTest(BaseTestCase):
         """Queue.put method"""
 
         q = Queue()
-        q.put(1)
+        key = q.put(1)
 
-        self.assertEqual([(0, 0.000125, 1)], q.heap)
-        self.assertEqual({1: (0, 0.000125, 1)}, q.entries)
+        expected_heap = [
+            (0, 0.000125, 1, '00000000-0000-0000-0000-000000000001')
+        ]
+        expected_entries = {
+            '00000000-0000-0000-0000-000000000001':
+                (0, 0.000125, 1, '00000000-0000-0000-0000-000000000001')
+        }
+        self.assertEqual(expected_heap, q.heap)
+        self.assertEqual(expected_entries, q.entries)
+        self.assertEqual('00000000-0000-0000-0000-000000000001', key)
 
     def test_put_prioritory(self):
         """Queue.put method w/ different priority"""
@@ -52,9 +60,9 @@ class QueuePutTest(BaseTestCase):
         q.put(3, priority=-1)
 
         expected_smallest = [
-            (-1, 0.00025, 2),
-            (-1, 0.000375, 3),
-            (0, 0.000125, 1)
+            (-1, 0.00025, 2, '00000000-0000-0000-0000-000000000002'),
+            (-1, 0.000375, 3, '00000000-0000-0000-0000-000000000003'),
+            (0, 0.000125, 1, '00000000-0000-0000-0000-000000000001')
         ]
         actual_smallest = heapq.nsmallest(3, q.heap)
 

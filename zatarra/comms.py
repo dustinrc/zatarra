@@ -39,7 +39,6 @@ def ping():
     }
 
     resp = jsonify(msg)
-    resp.status_code = 200
 
     return resp
 

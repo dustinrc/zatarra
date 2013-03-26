@@ -57,6 +57,7 @@ class CommsHealthTest(CommsTestCase):
         actual = r.json()
 
         self.assertEqual(expected, actual)
+        self.assertEqual(200, r.status_code)
 
     def test_404(self):
         """Comms 404 on bad paths"""

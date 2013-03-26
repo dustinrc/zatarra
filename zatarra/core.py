@@ -12,6 +12,9 @@
 from zatarra.queue import Queue
 
 
+LOCAL_QUEUE = 'local'
+
+
 class QueueMaster(object):
     """
     """
@@ -27,4 +30,13 @@ class QueueMaster(object):
             self.queues[name] = Queue()
         else:
             raise KeyError('queue {} already exists'.format(name))
+
+
+class Zatarra(object):
+    """
+    """
+
+    def __init__(self):
+        self.qm = QueueMaster()
+        self.qm.add(LOCAL_QUEUE)
 

@@ -10,7 +10,7 @@
 
 
 from zatarra.tests import BaseTestCase
-from zatarra.core import QueueMaster
+from zatarra.core import LOCAL_QUEUE, QueueMaster, Zatarra
 from zatarra.queue import Queue
 
 
@@ -44,4 +44,19 @@ class CoreQueueMasterAddTest(BaseTestCase):
 
         with self.assertRaises(KeyError):
             qm.add('moe')
+
+
+class CoreZatarraDefaults(BaseTestCase):
+
+    def test_constants(self):
+        """Zatarra constant defaults"""
+
+        self.assertEqual('local', LOCAL_QUEUE)
+
+    def test_initialization(self):
+        """Zatarra initialization defaults"""
+
+        z = Zatarra()
+
+        self.assertEqual(['local'], z.qm.queues.keys())
 

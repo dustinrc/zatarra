@@ -43,3 +43,19 @@ def ping():
 
     return resp
 
+
+@comms.errorhandler(404)
+def not_found(error=None):
+    """
+    """
+
+    msg = {
+        'data': 'not found: {}'.format(request.url),
+        'status': 'error'
+    }
+
+    resp = jsonify(msg)
+    resp.status_code = 404
+
+    return resp
+

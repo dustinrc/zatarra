@@ -58,3 +58,18 @@ class CommsHealthTest(CommsTestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_404(self):
+        """Comms 404 on bad paths"""
+
+        url = self.make_url('a/bad/path')
+        r = requests.get(url)
+
+        expected = {
+            'data': 'not found: {}'.format(url),
+            'status': 'error'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+        self.assertEqual(404, r.status_code)
+

@@ -9,6 +9,7 @@
 """
 
 
+from zatarra.util import  Singleton
 from zatarra.queue import Queue
 
 
@@ -35,6 +36,8 @@ class QueueMaster(object):
 class Zatarra(object):
     """
     """
+
+    __metaclass__ = Singleton
 
     def __init__(self):
         self.qm = QueueMaster()

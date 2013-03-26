@@ -60,3 +60,11 @@ class CoreZatarraDefaults(BaseTestCase):
 
         self.assertEqual(['local'], z.qm.queues.keys())
 
+    def test_initialization_singleton(self):
+        """Zatarra is a singleton"""
+
+        z1 = Zatarra()
+        z2 = Zatarra()
+
+        self.assertIs(z1, z2)
+

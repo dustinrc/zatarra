@@ -25,7 +25,7 @@ def comms_server(address):
     """
     """
 
-    return WSGIServer(address, comms)
+    return WSGIServer(address, application=comms, log=None)
 
 
 @comms.route('/health/ping')

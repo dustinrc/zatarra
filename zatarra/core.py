@@ -10,7 +10,7 @@
 
 
 from zatarra.util import  Singleton
-from zatarra.queue import Queue
+from zatarra.queue import PRIORITY, Queue
 
 
 LOCAL_QUEUE = 'local'
@@ -40,6 +40,17 @@ class QueueMaster(object):
             del self.queues[name]
         except KeyError:
             raise KeyError('queue {} does not exist'.format(name))
+
+    def put(self, name, item, priority=PRIORITY, key=None):
+        """
+        """
+
+        if name not in self.queues:
+            self.add(name)
+
+        key = self.queues[name].put(item, priority=priority, key=key)
+
+        return key
 
 
 class Zatarra(object):

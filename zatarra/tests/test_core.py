@@ -66,6 +66,28 @@ class CoreQueueMasterDeleteTest(BaseTestCase):
             qm.delete('moe')
 
 
+class CoreQueueMasterPutTest(BaseTestCase):
+
+    def test_put(self):
+        """QueueMaster.put"""
+
+        qm = QueueMaster()
+        qm.add('moe')
+        key = qm.put('moe', 1)
+
+        self.assertEqual('00000000-0000-0000-0000-000000000001', key)
+        self.assertEqual(1, len(qm.queues['moe']))
+
+    def test_put_non_existent(self):
+        """QueueMaster.put adds queue if non-existent"""
+
+        qm = QueueMaster()
+        key = qm.put('moe', 1)
+
+        self.assertEqual('00000000-0000-0000-0000-000000000001', key)
+        self.assertEqual(1, len(qm.queues['moe']))
+
+
 class CoreZatarraDefaultsTest(BaseTestCase):
 
     def test_constants(self):

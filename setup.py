@@ -23,7 +23,15 @@ except IOError as e:
    sys.stderr.write("File not found for long description: {}".format(readme))
    sys.exit(1)
 
-install_requires = []
+install_requires = [
+    'gevent',
+    'Flask',
+]
+setup_requires = [
+    'nose',
+    'coverage',
+    'requests',
+]
 
 
 class CleanSDist(Command):
@@ -57,6 +65,7 @@ setup(
     scripts=[],
     test_suite='',
     install_requires=install_requires,
+    setup_requires=setup_requires,
     provides=['zatarra'],
     include_package_data=False,
     classifiers=[

@@ -14,7 +14,7 @@ from zatarra.core import LOCAL_QUEUE, QueueMaster, Zatarra
 from zatarra.queue import Queue
 
 
-class CoreQueueMasterDefaults(BaseTestCase):
+class CoreQueueMasterDefaultsTest(BaseTestCase):
 
     def test_initialization(self):
         """QueueMaster initialization defaults"""
@@ -66,7 +66,7 @@ class CoreQueueMasterDeleteTest(BaseTestCase):
             qm.delete('moe')
 
 
-class CoreZatarraDefaults(BaseTestCase):
+class CoreZatarraDefaultsTest(BaseTestCase):
 
     def test_constants(self):
         """Zatarra constant defaults"""

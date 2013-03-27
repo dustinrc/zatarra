@@ -52,6 +52,15 @@ class QueueMaster(object):
 
         return key
 
+    def get(self, name):
+        """
+        """
+
+        if name not in self.queues:
+            raise KeyError('queue {} does not exist'.format(name))
+
+        return self.queues[name].get()
+
 
 class Zatarra(object):
     """

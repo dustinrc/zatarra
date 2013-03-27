@@ -88,6 +88,28 @@ class CoreQueueMasterPutTest(BaseTestCase):
         self.assertEqual(1, len(qm.queues['moe']))
 
 
+class CoreQueueMasterGetTest(BaseTestCase):
+
+    def test_get(self):
+        """QueueMaster.get"""
+
+        qm = QueueMaster()
+        qm.put('moe', 1)
+
+        expected_get = (1, '00000000-0000-0000-0000-000000000001')
+        actual_get = qm.get('moe')
+
+        self.assertEqual(expected_get, actual_get)
+
+    def test_get_non_existent(self):
+        """QueueMaster.get on non-existent queue"""
+
+        qm = QueueMaster()
+
+        with self.assertRaises(KeyError):
+            qm.get('moe')
+
+
 class CoreZatarraDefaultsTest(BaseTestCase):
 
     def test_constants(self):

@@ -32,6 +32,15 @@ class QueueMaster(object):
         else:
             raise KeyError('queue {} already exists'.format(name))
 
+    def delete(self, name):
+        """
+        """
+
+        try:
+            del self.queues[name]
+        except KeyError:
+            raise KeyError('queue {} does not exist'.format(name))
+
 
 class Zatarra(object):
     """

@@ -74,6 +74,13 @@ class QueueMaster(object):
 
         raise KeyError('no queue contains key: {}'.format(key))
 
+    def clean(self):
+        """
+        """
+
+        for name in self.queues:
+            self.queues[name].clean()
+
 
 class Zatarra(object):
     """

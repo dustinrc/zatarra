@@ -61,6 +61,19 @@ class QueueMaster(object):
 
         return self.queues[name].get()
 
+    def remove(self, key):
+        """
+        """
+
+        for name in self.queues:
+            try:
+                self.queues[name].remove(key)
+                return
+            except KeyError:
+                continue
+
+        raise KeyError('no queue contains key: {}'.format(key))
+
 
 class Zatarra(object):
     """

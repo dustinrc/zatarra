@@ -110,6 +110,30 @@ class CoreQueueMasterGetTest(BaseTestCase):
             qm.get('moe')
 
 
+class CoreQueueMasterRemoveTest(BaseTestCase):
+
+    def test_remove(self):
+        """QueueMaster.remove"""
+
+        qm = QueueMaster()
+        key = qm.put('moe', 1)
+        qm.put('larry', 1)
+        qm.put('curly', 1)
+        qm.remove(key)
+
+        self.assertEqual(0, len(qm.queues['moe']))
+        self.assertEqual(1, len(qm.queues['larry']))
+        self.assertEqual(1, len(qm.queues['curly']))
+
+    def test_remove_non_existent(self):
+        """QueueMaster.remove of non-existent key"""
+
+        qm = QueueMaster()
+
+        with self.assertRaises(KeyError):
+            qm.remove('')
+
+
 class CoreZatarraDefaultsTest(BaseTestCase):
 
     def test_constants(self):

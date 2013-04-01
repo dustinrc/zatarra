@@ -77,6 +77,39 @@ class CommsQueueAddTest(CommsTestCase):
         self.assertEqual(expected, actual)
 
 
+class CommsQueueDeleteTest(CommsTestCase):
+
+    def test_delete(self):
+        """Comms queue delete"""
+
+        add_url = self.make_url('/queues/moe/add')
+        delete_url = self.make_url('/queues/moe/delete')
+        requests.get(add_url)
+        r = requests.get(delete_url)
+
+        expected = {
+            'data': None,
+            'status': 'ok'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+    def test_delete_non_existent(self):
+        """Comms queue delete, non-existent"""
+
+        url = self.make_url('/queues/moe/delete')
+        r = requests.get(url)
+
+        expected = {
+            'data': None,
+            'status': 'error'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+
 class CommsHealthTest(CommsTestCase):
 
     def test_ping(self):

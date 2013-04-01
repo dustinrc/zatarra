@@ -14,6 +14,8 @@ from gevent import monkey; monkey.patch_all()
 from flask import Flask, jsonify, request
 from gevent.pywsgi import WSGIServer
 
+from zatarra.core import Zatarra
+
 
 ADDRESS = ('', 2002)
 
@@ -26,6 +28,28 @@ def comms_server(address):
     """
 
     return WSGIServer(address, application=comms, log=None)
+
+
+@comms.route('/queues/<name>/add')
+def add(name):
+    """
+    """
+
+    msg = {
+        'data': None,
+        'status': 'ok'
+    }
+
+    z = Zatarra()
+
+    try:
+        z.qm.add(name)
+    except KeyError:
+        msg['status'] = 'error'
+
+    resp = jsonify(msg)
+
+    return resp
 
 
 @comms.route('/health/ping')

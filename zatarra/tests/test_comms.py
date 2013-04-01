@@ -42,6 +42,23 @@ class CommsDefaultsTest(BaseTestCase):
         self.assertEqual(('', 2002), ADDRESS)
 
 
+class CommsQueueAddTest(CommsTestCase):
+
+    def test_add(self):
+        """Comms queue add"""
+
+        url = self.make_url('/queues/moe/add')
+        r = requests.get(url)
+
+        expected = {
+            'data': None,
+            'status': 'ok'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+
 class CommsHealthTest(CommsTestCase):
 
     def test_ping(self):

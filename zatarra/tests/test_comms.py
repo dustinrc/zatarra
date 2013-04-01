@@ -110,6 +110,43 @@ class CommsQueueDeleteTest(CommsTestCase):
         self.assertEqual(expected, actual)
 
 
+class CommsQueuePutTest(CommsTestCase):
+
+    def test_put(self):
+        """Comms queue put"""
+
+        url = self.make_url('/queues/moe/put?item=1')
+        r = requests.get(url)
+
+        expected = {
+            'data': '00000000-0000-0000-0000-000000000001',
+            'status': 'ok'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+    def test_put_extra_args(self):
+        """Comms queue put with priority and key"""
+
+        url = self.make_url('/queues/moe/put?item=1')
+        r = requests.get(url)
+        key = r.json()['data']
+
+        extras_url = self.make_url(
+            '/queues/moe/put?item=2&priority=-1&key={}'.format(key)
+        )
+        extras_r = requests.get(extras_url)
+
+        expected = {
+            'data': '00000000-0000-0000-0000-000000000001',
+            'status': 'ok'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+
 class CommsHealthTest(CommsTestCase):
 
     def test_ping(self):

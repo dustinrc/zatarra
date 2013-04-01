@@ -74,6 +74,23 @@ def delete(name):
     return resp
 
 
+@comms.route('/queues/<name>/put')
+def put(name):
+    """
+    """
+
+    msg = {
+        'data': None,
+        'status': 'ok'
+    }
+
+    z = Zatarra()
+    msg['data'] = z.qm.put(name, request.args['item'])
+    resp = jsonify(msg)
+
+    return resp
+
+
 @comms.route('/health/ping')
 def ping():
     """

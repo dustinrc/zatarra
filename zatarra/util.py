@@ -18,10 +18,3 @@ class Singleton(type):
             cls._instance = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instance
 
-    def _drop(self):
-        """
-        Drop the instance (for testing purposes).
-        """
-        Singleton.__instance = None
-        del self.Singleton.__instance
-

@@ -13,6 +13,7 @@ import requests
 
 from zatarra.tests import BaseTestCase
 from zatarra.comms import comms_server, ADDRESS
+from zatarra.core import Zatarra
 
 
 class CommsTestCase(BaseTestCase):
@@ -31,6 +32,8 @@ class CommsTestCase(BaseTestCase):
 
     def tearDown(self):
         self.cs.stop()
+        z = Zatarra()
+        z._drop()
         super(CommsTestCase, self).tearDown()
 
 
@@ -53,6 +56,21 @@ class CommsQueueAddTest(CommsTestCase):
         expected = {
             'data': None,
             'status': 'ok'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+    def test_add_existing(self):
+        """Comms queue add, already exists"""
+
+        url = self.make_url('/queues/moe/add')
+        requests.get(url)
+        r = requests.get(url)
+
+        expected = {
+            'data': None,
+            'status': 'error'
         }
         actual = r.json()
 

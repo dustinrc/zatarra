@@ -92,9 +92,10 @@ class Zatarra(object):
         self.qm = QueueMaster()
         self.qm.add(LOCAL_QUEUE)
 
-    def _drop(self):
+    @classmethod
+    def _drop(cls):
         """
         Drop the instance (for testing purposes).
         """
-        del self.Singleton.__instance
+        del cls._instance
 

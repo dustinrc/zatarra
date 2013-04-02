@@ -12,6 +12,7 @@
 from gevent import monkey; monkey.patch_all()
 
 from flask import Flask, jsonify, request
+from gevent.pool import Pool
 from gevent.pywsgi import WSGIServer
 
 from zatarra.core import Zatarra
@@ -23,11 +24,18 @@ ADDRESS = ('', 2002)
 comms = Flask(__name__)
 
 
-def comms_server(address):
+def comms_server(address, backlog=1000, pool=None, log=None):
     """
     """
 
-    return WSGIServer(address, application=comms, log=None)
+    kwargs = {
+        'application': comms,
+        'backlog': backlog,
+        'spawn': pool or Pool(50000),
+        'log': log,
+    }
+
+    return WSGIServer(address, **kwargs)
 
 
 @comms.route('/queues/<name>/add')

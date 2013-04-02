@@ -129,8 +129,10 @@ class CommsQueuePutTest(CommsTestCase):
     def test_put_extra_args(self):
         """Comms queue put with priority and key"""
 
-        url = self.make_url('/queues/moe/put?item=1')
-        r = requests.get(url)
+        url_one = self.make_url('/queues/moe/put?item=1')
+        url_two = self.make_url('/queues/moe/put?item=0')
+        requests.get(url_one)
+        r = requests.get(url_two)
         key = r.json()['data']
 
         extras_url = self.make_url(
@@ -139,12 +141,18 @@ class CommsQueuePutTest(CommsTestCase):
         extras_r = requests.get(extras_url)
 
         expected = {
-            'data': '00000000-0000-0000-0000-000000000001',
+            'data': '00000000-0000-0000-0000-000000000002',
             'status': 'ok'
         }
         actual = r.json()
 
         self.assertEqual(expected, actual)
+
+        # double check actual queue
+        z = Zatarra()
+        expected_get = ('2', '00000000-0000-0000-0000-000000000002')
+
+        self.assertEqual(expected_get, z.qm.get('moe'))
 
 
 class CommsQueueGetTest(CommsTestCase):

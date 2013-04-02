@@ -84,8 +84,13 @@ def put(name):
         'status': 'ok'
     }
 
+    kwargs = dict(request.args.items())
+    if 'priority' in kwargs:
+        kwargs['priority'] = int(kwargs['priority'])
+    del kwargs['item']
+
     z = Zatarra()
-    msg['data'] = z.qm.put(name, request.args['item'])
+    msg['data'] = z.qm.put(name, request.args['item'], **kwargs)
     resp = jsonify(msg)
 
     return resp

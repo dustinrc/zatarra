@@ -91,6 +91,23 @@ def put(name):
     return resp
 
 
+@comms.route('/queues/<name>/get')
+def get(name):
+    """
+    """
+
+    msg = {
+        'data': None,
+        'status': 'ok'
+    }
+
+    z = Zatarra()
+    msg['data'] = z.qm.get(name)
+    resp = jsonify(msg)
+
+    return resp
+
+
 @comms.route('/health/ping')
 def ping():
     """

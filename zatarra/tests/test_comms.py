@@ -147,6 +147,25 @@ class CommsQueuePutTest(CommsTestCase):
         self.assertEqual(expected, actual)
 
 
+class CommsQueueGetTest(CommsTestCase):
+
+    def test_get(self):
+        """Comms queue get"""
+
+        url_put = self.make_url('/queues/moe/put?item=1')
+        url_get = self.make_url('/queues/moe/get')
+        requests.get(url_put)
+        r = requests.get(url_get)
+
+        expected = {
+            'data': ['1', '00000000-0000-0000-0000-000000000001'],
+            'status': 'ok'
+        }
+        actual = r.json()
+
+        self.assertEqual(expected, actual)
+
+
 class CommsHealthTest(CommsTestCase):
 
     def test_ping(self):
